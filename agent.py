@@ -1,6 +1,7 @@
 import numpy as np
 import random
 import pandas as pd
+from environment import State
 
 class Aircraft:
     def __init__(self, name, pos, angle, speed = 3):
@@ -11,12 +12,12 @@ class Aircraft:
         # angle of plane w.r.t positive x-axis
         self.angle = angle
     
-    def move(self):
+    def _move(self):
         real_angle = int((10 * self.angle) * (np.pi/180))
         self.pos['x'] += int(self.speed * np.cos(np.pi - real_angle))
         self.pos['y'] += int(self.speed * np.sin(np.pi - real_angle))
     
-    def rotate(self, rot_angle: int):
+    def _rotate(self, rot_angle: int):
         '''
         + for clockwise, - for anticlockwise
         '''
@@ -66,17 +67,14 @@ class CollisionAgent:
         if state not in self.q_table.index:
             self.q_table.append(pd.Series([0]*len(self.actions), index=self.q_table.colums, name = state))
     
-    def get_curr_state(self):
+    def get_curr_state(self) -> State:
         d = int(np.sqrt((self.ownship.pos['x'] - self.intruder.pos['x'])**2 + 
                         (self.ownship.pos['y'] - self.intruder.pos['y'])**2))
         rho = ((np.arctan((self.intruder.pos['y'] - self.ownship.pos['y'])/
                          (self.intruder.pos['x'] - self.ownship.pos['x'])))* (180 / np.pi)) // 10
         theta = (self.intruder.angle - self.ownship.angle) // 10
-        return {
-            'd': d,
-            'rho': rho,
-            'theta': theta
-        }
+        state = State(d, rho, theta)
+        return state
     
     
     
