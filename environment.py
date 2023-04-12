@@ -56,7 +56,6 @@ class AirTrafficEnvironment:
         init_next_state = self.compute_next_state(ownship, init_ownship_action, intruder, init_intruder_action) # s_
         init_reward = self.compute_reward(ownship, intruder, ownship.airport) # r
         init_next_ownship_action = np.random.choice(action_space) # a_
-        init_next_intruder_action = np.random.choice(action_space)
         timestep1 = TimeStep(init_state, init_ownship_action, init_reward, init_next_state, init_next_ownship_action)
         init_next_intruder_action = np.random.choice(action_space)
         
