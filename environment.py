@@ -18,6 +18,7 @@ class TimeStep:
         self.r = r
         self.s_ = s_
         self.a_ = a_
+        
 class AirTrafficEnvironment:
     def __init__(self, num_planes, num_spawnpoints, num_destinations, lr, gamma, epsilon, thresh_distance = 50, load_q_table=False, num_obstacles = 0):
         self.num_planes = num_planes
@@ -61,7 +62,7 @@ class AirTrafficEnvironment:
         
         episode = [timestep1]
         
-        # while (self.plane_distance(ownship, intruder) <= 50 and self.self.plane_distance(ownship, intruder) > 0):
+        # while (p.d(ownship, intruder) <= 50 and p.d(ownship, intruder) > 0):
             
         
         
