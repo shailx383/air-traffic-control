@@ -2,17 +2,48 @@ import numpy as np
 import random
 import pandas as pd
 
-print(np.pi)
-
 class Aircraft:
-    def __init__(self, name, pos, angle):
+    def __init__(self, name, pos, angle, speed = 3):
         self.name = name
         
         self.pos = pos
-        
+        self.speed = speed
         # angle of plane w.r.t positive x-axis
         self.angle = angle
-        
+    
+    def move(self):
+        real_angle = int((10 * self.angle) * (np.pi/180))
+        self.pos['x'] += int(self.speed * np.cos(np.pi - real_angle))
+        self.pos['y'] += int(self.speed * np.sin(np.pi - real_angle))
+    
+    def rotate(self, rot_angle: int):
+        '''
+        + for clockwise, - for anticlockwise
+        '''
+        real_rot_angle = rot_angle // 10
+        self.angle += real_rot_angle
+        if self.angle > 35:
+            self.angle -= 36    
+    
+    def take_action(self, action: str):
+        if action == "S":
+            self.move()   
+        elif action == "HL":
+            self.rotate(90)
+            self.move()
+        elif action == "HR":
+            self.rotate(-90)
+            self.move()
+        elif action == "ML":
+            self.rotate(45)
+            self.move()
+        elif action == "MR":
+            self.rotate(-45)
+            self.move()
+        else:
+            pass
+
+
 
 # outside funcs: update_env after action taken by ownship and intruder
 

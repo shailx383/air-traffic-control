@@ -21,6 +21,8 @@ class AirTrafficEnvironment:
                          (self.intruder.pos['x'] - self.ownship.pos['x'])))* (180 / np.pi)) // 10
         init_theta = (self.intruder.angle - self.ownship.angle) // 10
         episode = [{'d': init_d, 'rho': init_rho, 'theta': init_theta}]
+        ownship_action = np.random.choice(action_space)
+        intruder_action = np.random.choice(action_space)
         
         
         
