@@ -4,9 +4,9 @@ import pandas as pd
 from environment import State
 
 class Aircraft:
-    def __init__(self, name, pos, angle, speed = 3):
+    def __init__(self, name, pos, angle, destination, speed = 3):
         self.name = name
-        
+        self.airport = destination
         self.pos = pos
         self.speed = speed
         # angle of plane w.r.t positive x-axis
