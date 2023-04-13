@@ -13,12 +13,12 @@ class Aircraft:
     
     def _move(self):
         real_angle = int((10 * self.angle) * (np.pi/180))
-        self.pos['x'] += int(self.speed * np.cos(np.pi - real_angle))
-        self.pos['y'] += int(self.speed * np.sin(np.pi - real_angle))
+        self.pos['x'] += int(self.speed * np.cos(real_angle))
+        self.pos['y'] += int(self.speed * np.sin(real_angle))
     
     def _rotate(self, rot_angle: int):
         '''
-        + for clockwise, - for anticlockwise
+        - for clockwise, + for anticlockwise
         '''
         real_rot_angle = rot_angle // 10
         self.angle += real_rot_angle
