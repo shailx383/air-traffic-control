@@ -1,7 +1,5 @@
-import random
-import time
 import numpy as np
-import math
+
 from agent import Aircraft
 import parameters as p
 
@@ -43,25 +41,28 @@ class AirTrafficEnvironment:
         intruder_reward = - (self.thresh_distance ** 2 - p.d(ownship, intruder) ** 2) / (self.thresh_distance ** 2 / 500)
         destination_reward = 100 - np.sqrt((ownship.pos['x'] - destination['x']) ** 2 + (ownship.pos['y'] - destination['y']) ** 2)
         return intruder_reward + destination_reward
+    
+     
+    # # episodes may be short ?
+    # def generateEpisode(self, ownship: Aircraft, intruder: Aircraft, action_space: list):
+    #     init_d = 50
+    #     init_rho = ((np.arctan((intruder.pos['y'] - ownship.pos['y'])/
+    #                      (intruder.pos['x'] - ownship.pos['x'])))* (180 / np.pi)) // 10
+    #     init_theta = (intruder.angle - ownship.angle) // 10
+    #     init_state = State(init_d, init_rho, init_theta) # s
+    #     init_ownship_action = np.random.choice(action_space) # a
+    #     init_intruder_action = np.random.choice(action_space)
+    #     init_next_state = self.compute_next_state(ownship, init_ownship_action, intruder, init_intruder_action) # s_
+    #     init_reward = self.compute_reward(ownship, intruder, ownship.airport) # r
+    #     init_next_ownship_action = np.random.choice(action_space) # a_
+    #     timestep1 = TimeStep(init_state, init_ownship_action, init_reward, init_next_state, init_next_ownship_action)
+    #     init_next_intruder_action = np.random.choice(action_space)
         
-    # episodes may be short ?
-    def generateEpisode(self, ownship: Aircraft, intruder: Aircraft, action_space: list):
-        init_d = 50
-        init_rho = ((np.arctan((intruder.pos['y'] - ownship.pos['y'])/
-                         (intruder.pos['x'] - ownship.pos['x'])))* (180 / np.pi)) // 10
-        init_theta = (intruder.angle - ownship.angle) // 10
-        init_state = State(init_d, init_rho, init_theta) # s
-        init_ownship_action = np.random.choice(action_space) # a
-        init_intruder_action = np.random.choice(action_space)
-        init_next_state = self.compute_next_state(ownship, init_ownship_action, intruder, init_intruder_action) # s_
-        init_reward = self.compute_reward(ownship, intruder, ownship.airport) # r
-        init_next_ownship_action = np.random.choice(action_space) # a_
-        timestep1 = TimeStep(init_state, init_ownship_action, init_reward, init_next_state, init_next_ownship_action)
-        init_next_intruder_action = np.random.choice(action_space)
+    #     episode = [timestep1]
         
-        episode = [timestep1]
-        
-        # while (p.d(ownship, intruder) <= 50 and p.d(ownship, intruder) > 0):
+    #     # while (p.d(ownship, intruder) <= 50 and p.d(ownship, intruder) > 0):
+    
+    
             
         
         

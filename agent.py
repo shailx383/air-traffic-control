@@ -1,5 +1,4 @@
 import numpy as np
-import random
 import pandas as pd
 from environment import State
 
