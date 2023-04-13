@@ -1,6 +1,1 @@
-default,2300,Random,None
-default,1540,sarsa,None
-default,1100,Hero,None
-default,600,Hero,None
-default,100,Straigth,None
-default,40,Hmm,None
+

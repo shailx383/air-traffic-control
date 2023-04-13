@@ -45,7 +45,12 @@ class HighScore:
             elif(event.type == pygame.KEYUP):
                 if(event.key == pygame.K_ESCAPE):
                     self.highEnd = conf.get()['codes']['user_end']
-         
+    def addSub(self,score):
+        if (score > 0):
+                position = self.myScores.check(score)
+                if(position != None):
+                    position = self.myScores.submit(score,"SARSA",None)
+
     def start(self,score):   
         self.highEnd = 0            
         clock = pygame.time.Clock()
@@ -53,38 +58,37 @@ class HighScore:
         if (score > 0):
                 position = self.myScores.check(score)
                 if(position != None):
-                    app = gui.Desktop()
-                    app.connect(gui.QUIT,app.quit,None)
-                    main = gui.Container(width=500, height=400) #, background=(220, 220, 220) )
-                    positionText = "You are " + PositionText(position) + " on the High Score table!!"
-                    main.add(gui.Label(positionText, cls="h1"), 20, 20)
-                    td_style = {'padding_right': 10}
-                    t = gui.Table()
-                    t.tr()
-                    t.td( gui.Label('Type your name:') , style=td_style )
-                    userName = gui.Input()
-                    t.tr()
-                    t.td( userName, style=td_style )
-                    b = gui.Button("Done")
-                    b.connect(gui.CLICK,app.quit,None)
-                    t.td( b, style=td_style )
-                    main.add(t, 20, 100)
-                    app.run(main)
-                    if (userName.value != ""):
-                        position = self.myScores.submit(score,userName.value[0:15],None)
-                else:
-                    app = gui.Desktop()
-                    app.connect(gui.QUIT,app.quit,None)
-                    main = gui.Container(width=500, height=400) #, background=(220, 220, 220) )
-                    main.add(gui.Label("Sorry you didn't get a high score", cls="h1"), 20, 20)
-                    td_style = {'padding_right': 10}
-                    t = gui.Table()
-                    t.tr()
-                    b = gui.Button("Done")
-                    b.connect(gui.CLICK,app.quit,None)
-                    t.td( b, style=td_style )
-                    main.add(t, 20, 100)
-                    app.run(main)
+                    position = self.myScores.submit(score,"SARSA",None)
+                #     app = gui.Desktop()
+                #     app.connect(gui.QUIT,app.quit,None)
+                #     main = gui.Container(width=500, height=400) #, background=(220, 220, 220) )
+                #     positionText = "You are " + PositionText(position) + " on the High Score table!!"
+                #     main.add(gui.Label(positionText, cls="h1"), 20, 20)
+                #     td_style = {'padding_right': 10}
+                #     t = gui.Table()
+                #     t.tr()
+                #     t.td( gui.Label('Type your name:') , style=td_style )
+                #     userName = gui.Input()
+                #     t.tr()
+                #     t.td( userName, style=td_style )
+                #     b = gui.Button("Done")
+                #     b.connect(gui.CLICK,app.quit,None)
+                #     t.td( b, style=td_style )
+                #     main.add(t, 20, 100)
+                #     app.run(main)
+                # else:
+                #     app = gui.Desktop()
+                #     app.connect(gui.QUIT,app.quit,None)
+                #     main = gui.Container(width=500, height=400) #, background=(220, 220, 220) )
+                #     main.add(gui.Label("Sorry you didn't get a high score", cls="h1"), 20, 20)
+                #     td_style = {'padding_right': 10}
+                #     t = gui.Table()
+                #     t.tr()
+                #     b = gui.Button("Done")
+                #     b.connect(gui.CLICK,app.quit,None)
+                #     t.td( b, style=td_style )
+                #     main.add(t, 20, 100)
+                #     app.run(main)
   
         #Draw background
         pygame.draw.rect(self.screen, (255, 255, 255), pygame.Rect(0, 0, self.SCREEN_W, self.SCREEN_H))  

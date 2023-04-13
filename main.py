@@ -40,7 +40,7 @@ class Main:
         self.high = HighScore(self.screen)
         self.infologger = info_logger.info_logger()
         #Current visitor number
-        self.id = int(self.infologger.get_id())
+        self.id = int(self.infologger.get_id()) + 1
 
     def run(self):
         state = STATE_MENU
@@ -54,7 +54,6 @@ class Main:
                 self.infologger.writeout()
                 if (menuEndCode == conf.get()['codes']['start']):
                     state = STATE_AGES
-                    self.id += 1
                     self.infologger.add_value(self.id,'id',self.id)
                 elif (menuEndCode == conf.get()['codes']['demo']):
                     state = STATE_DEMO
@@ -71,9 +70,12 @@ class Main:
                 elif (gameEndCode == conf.get()['codes']['kill']):
                     state = STATE_KILL
                 elif (gameEndCode == conf.get()['codes']['user_end']):
-                    state = STATE_MENU
-                elif (gameEndCode == conf.get()['codes']['ac_collide']):
                     state = STATE_HIGH
+                elif (gameEndCode == conf.get()['codes']['ac_collide']):
+                    self.high.addSub(score)
+                    state = STATE_GAME
+                    score=0
+                    self.id += 1
             elif (state == STATE_DEMO):
                game = Game(self.screen, True)
                (gameEndCode, score) = game.start()

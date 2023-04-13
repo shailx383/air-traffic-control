@@ -87,7 +87,7 @@ class Game:
         self.delaytimer = 0
 
         if not self.demomode:
-            self.btn_game_end = gui.Button(value="End Game", width=Game.FS_W-3, height=60)
+            self.btn_game_end = gui.Button(value="SCORES", width=Game.FS_W-3, height=60)
             self.btn_game_end.connect(gui.CLICK, self.__callback_User_End)        
             self.cnt_main.add(self.btn_game_end, Game.FSPANE_LEFT, Game.FSPANE_TOP - 65)
         else:
@@ -104,7 +104,7 @@ class Game:
         self.Agent = SarsaAgent(load_q_table='offline_q_table.pkl')
         with open('offline_q_table.pkl', 'wb') as f:
                 pickle.dump(self.Agent.Q_table, f) 
-        # self.Agent = RandomAgent()
+        # self.Agent = NormalAgent()
         #nextDemoEventTime = rand9om.randint(10000,20000)
         nextDemoEventTime = 6000 # first demo event time is 6 seconds after start of demo
         randAC = None
@@ -167,7 +167,7 @@ class Game:
                     self.score = 0
                 #Draw score/time indicators
                 sf_score = self.font.render("Score: " + str(self.score), True, Game.COLOR_SCORETIME)
-                sf_time = self.font.render("Time: " + str( math.floor((conf.get()['game']['gametime'] - self.ms_elapsed) / 1000) ), True, Game.COLOR_SCORETIME)
+                sf_time = self.font.render("Time: " + str( math.floor((self.ms_elapsed) / 1000) ), True, Game.COLOR_SCORETIME)
                 self.screen.fill((0,0,0),sf_score.get_rect().move(Game.FSPANE_LEFT + 30, 10))
                 self.screen.fill((0,0,0),sf_time.get_rect().move(Game.FSPANE_LEFT + 30, 40))
                 self.screen.blit(sf_score, (Game.FSPANE_LEFT + 30, 10))
@@ -182,8 +182,8 @@ class Game:
                     
             #Recalc time and check for game end
             self.ms_elapsed = self.ms_elapsed + timepassed
-            if(self.ms_elapsed >= conf.get()['game']['gametime'] and not self.demomode):
-                self.gameEndCode = conf.get()['codes']['time_up']
+            # if(self.ms_elapsed >= conf.get()['game']['gametime'] and not self.demomode):
+                # self.gameEndCode = conf.get()['codes']['time_up']
             #Flip the framebuffers
             self.app.update(self.screen)
             pygame.display.flip()
@@ -309,8 +309,6 @@ class Game:
                             self.ac_selected.resetHeading()
 
                     if(event.key == pygame.K_ESCAPE):
-                        with open('offline_q_table.pkl', 'wb') as f:
-                            pickle.dump(self.Agent.Q_table, f)
                         self.gameEndCode = conf.get()['codes']['user_end']
     
     def __callback_User_End(self):
@@ -323,8 +321,6 @@ class Game:
 
     def __handleAircraftCollision(self, ac1, ac2):
         if( Utility.locDistSq(ac1.getLocation(), ac2.getLocation()) < (conf.get()['aircraft']['collision_radius'] ** 2) ):
-            with open('offline_q_table.pkl', 'wb') as f:
-                pickle.dump(self.Agent.Q_table, f) 
             if not self.demomode:
                 self.gameEndCode = conf.get()['codes']['ac_collide']
             self.score += conf.get()['scoring']['ac_collide']
@@ -413,42 +409,44 @@ class Game:
 
     def __displayPostGameDialog(self):
         #Do post-loop actions (game over dialogs)
-        if(self.gameEndCode != conf.get()['codes']['user_end'] and self.gameEndCode != conf.get()['codes']['kill']):
-            l = gui.Label("Game Over!")
-            b = gui.Button("OK")
+        with open('offline_q_table.pkl', 'wb') as f:
+                pickle.dump(self.Agent.Q_table, f)
+        # if(self.gameEndCode != conf.get()['codes']['user_end'] and self.gameEndCode != conf.get()['codes']['kill']):
+            # l = gui.Label("Game Over!")
+            # b = gui.Button("OK")
            
-            # Not nice... but one way of passing by reference!
-            # A list is a mutable object, while an int isn't -- that's why I'm using a list
-            # Wait for Python 3 to allow assigning non-global variable in outer scope (keyword: nonlocal)
-            bob = [False]
-            def okcb(b):
-                b[0] = True 
+            # # Not nice... but one way of passing by reference!
+            # # A list is a mutable object, while an int isn't -- that's why I'm using a list
+            # # Wait for Python 3 to allow assigning non-global variable in outer scope (keyword: nonlocal)
+            # bob = [False]
+            # def okcb(b):
+            #     b[0] = True 
 
-            b.connect(gui.CLICK,okcb,bob)
-            c = gui.Container()
+            # b.connect(gui.CLICK,okcb,bob)
+            # c = gui.Container()
 
+            
+            # if(self.gameEndCode == conf.get()['codes']['ac_collide']):
+            #     # Check if sound is playing and if not play it. (Probably never happen in this call)
+            #     if not self.channel_collision.get_busy():
+            #         self.channel_collision.play(self.sound_collision)
+            #     c.add(gui.Label("COLLISION!!!!"), 0, 0)
+            # elif(self.gameEndCode == conf.get()['codes']['time_up']):
+            #     c.add(gui.Label("Time up!"), 0, 0)
 
-            if(self.gameEndCode == conf.get()['codes']['ac_collide']):
-                # Check if sound is playing and if not play it. (Probably never happen in this call)
-                if not self.channel_collision.get_busy():
-                    self.channel_collision.play(self.sound_collision)
-                c.add(gui.Label("COLLISION!!!!"), 0, 0)
-            elif(self.gameEndCode == conf.get()['codes']['time_up']):
-                c.add(gui.Label("Time up!"), 0, 0)
+            # c.add(b,0,30)
 
-            c.add(b,0,30)
-
-            d = gui.Dialog(l, c)
-            d.open()
-            self.app.update(self.screen)
-            pygame.display.flip()
-            #pygame.time.delay(3000)
-            clock = pygame.time.Clock()
-            while(not bob[0]):
-                timepassed = clock.tick(conf.get()['game']['framerate'])
-                for e in pygame.event.get():
-                    self.app.event(e)
-                self.app.repaint()
-                self.app.update(self.screen)
-                pygame.display.flip()
+            # d = gui.Dialog(l, c)
+            # d.open()
+            # self.app.update(self.screen)
+            # pygame.display.flip()
+            # #pygame.time.delay(3000)
+            # clock = pygame.time.Clock()
+            # while(not bob[0]):
+            #     timepassed = clock.tick(conf.get()['game']['framerate'])
+            #     for e in pygame.event.get():
+            #         self.app.event(e)
+            #     self.app.repaint()
+            #     self.app.update(self.screen)
+            #     pygame.display.flip()
 
