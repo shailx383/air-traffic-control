@@ -47,8 +47,8 @@ class AirTrafficEnvironment:
     # def generateEpisode(self, ownship: Aircraft, intruder: Aircraft, action_space: list):
     #     init_d = 50
     #     init_rho = ((np.arctan((intruder.pos['y'] - ownship.pos['y'])/
-    #                      (intruder.pos['x'] - ownship.pos['x'])))* (180 / np.pi)) // 10
-    #     init_theta = (intruder.angle - ownship.angle) // 10
+    #                      (intruder.pos['x'] - ownship.pos['x'])))* (180 / np.pi)) // 5
+    #     init_theta = (intruder.angle - ownship.angle) // 5
     #     init_state = State(init_d, init_rho, init_theta) # s
     #     init_ownship_action = np.random.choice(action_space) # a
     #     init_intruder_action = np.random.choice(action_space)

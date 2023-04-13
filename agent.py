@@ -20,7 +20,7 @@ class Aircraft:
         '''
         - for clockwise, + for anticlockwise
         '''
-        real_rot_angle = rot_angle // 10
+        real_rot_angle = rot_angle // 5
         self.angle += real_rot_angle
         if self.angle > 35:
             self.angle -= 36    
@@ -66,14 +66,14 @@ class CollisionAgent:
         if state not in self.q_table.index:
             self.q_table.append(pd.Series([0]*len(self.actions), index=self.q_table.colums, name = state))
     
-    def get_curr_state(self) -> State:
-        d = int(np.sqrt((self.ownship.pos['x'] - self.intruder.pos['x'])**2 + 
-                        (self.ownship.pos['y'] - self.intruder.pos['y'])**2))
-        rho = ((np.arctan((self.intruder.pos['y'] - self.ownship.pos['y'])/
-                         (self.intruder.pos['x'] - self.ownship.pos['x'])))* (180 / np.pi)) // 10
-        theta = (self.intruder.angle - self.ownship.angle) // 10
-        state = State(d, rho, theta)
-        return state
+    # def get_curr_state(self) -> State:
+    #     d = int(np.sqrt((self.ownship.pos['x'] - self.intruder.pos['x'])**2 + 
+    #                     (self.ownship.pos['y'] - self.intruder.pos['y'])**2))
+    #     rho = ((np.arctan((self.intruder.pos['y'] - self.ownship.pos['y'])/
+    #                      (self.intruder.pos['x'] - self.ownship.pos['x'])))* (180 / np.pi)) // 5
+    #     theta = (self.intruder.angle - self.ownship.angle) // 5
+    #     state = State(d, rho, theta)
+    #     return state
     
     
     
