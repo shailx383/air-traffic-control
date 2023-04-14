@@ -109,6 +109,7 @@ class Game:
             '2': SarsaAgent(load_q_table= pklname),
             '3': QLAgent(load_q_table= pklname),
             '4': ESarsaAgent(load_q_table= pklname,load_p_table= pklname2),
+            '5': DQLAgent(load_q_table= pklname,load_p_table= pklname2)
         }
         self.Agent = choice[agent]
         with open(pklname, 'wb') as f:
@@ -352,7 +353,7 @@ class Game:
                     if a.lastEdit == 0:
                         a.lastEdit = pygame.time.get_ticks()
                         a.turnHeading(self.Agent.update(a.getLocation(),a.getHeading(),at.getLocation(),at.getHeading(),a.destination))
-                    elif (pygame.time.get_ticks() - a.lastEdit) >= 1000:
+                    elif (pygame.time.get_ticks() - a.lastEdit) >= 800:
                         a.lastEdit = pygame.time.get_ticks()
                         a.turnHeading(self.Agent.update(a.getLocation(),a.getHeading(),at.getLocation(),at.getHeading(),a.destination))
                     

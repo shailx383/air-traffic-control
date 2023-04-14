@@ -20,7 +20,8 @@
         { "text": "RANDOM", "code": "1" },
         { "text": "SARSA", "code": "2" },
         { "text": "Q-LEARNING", "code": "3" },
-        { "text": "EXP SARSA", "code": "4" }
+        { "text": "EXP SARSA", "code": "4" },
+        { "text": "DQ-LEARNING", "code": "5" }
       ]
     }
   },

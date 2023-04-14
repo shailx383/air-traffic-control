@@ -106,6 +106,8 @@ class HighScore:
             '2':  "SARSA",
             '3': "Q-LEARNING",
             '4':  "EXP SARSA",
+            '5': "DQ-LEARNING"
+
         }
         for e in self.myScores:
             data += "<tr>"
