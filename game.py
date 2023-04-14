@@ -249,10 +249,8 @@ class Game:
                     self.cnt_fspane.addNewFlightStrip(ac)
                 self.aircraftspawns.remove(sp)
                 self.aircraftspawntimes.remove(self.aircraftspawntimes[0])
-        elif self.demomode:
-            self.ms_eleapsed = 0
+        else:
             self.__generateAircraftSpawnEvents()
-            print("reset")
     
     def __handleUserInteraction(self):
 

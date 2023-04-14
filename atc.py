@@ -50,8 +50,8 @@ class SarsaAgent:
         self.gamma = discount_factor
         self.epsilon = epsilon
         self.Q_table = {}
-        if os.path.exists('offline_q_table.pkl'):
-            with open('offline_q_table.pkl', 'rb') as f:
+        if os.path.exists(load_q_table):
+            with open(load_q_table, 'rb') as f:
                 self.Q_table = pickle.load(f)
 
     def take_action(self,state):
