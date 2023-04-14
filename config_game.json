@@ -12,21 +12,20 @@
       ]
     },
     "ages_menu": {
-      "title": "Choose your age",
+      "title": "Choose your Agent",
       "titleRGB": [8, 165, 225],
       "titlesize": 75,
       "buttons": [
-        { "text": "0-13", "code": "0-13" },
-        { "text": "14-21", "code": "14-21" },
-        { "text": "22-30", "code": "22-30" },
-        { "text": "31-40", "code": "31-40" },
-        { "text": "41-50", "code": "41-50" },
-        { "text": "51+", "code": "51+" }
+        { "text": "BEELINE", "code": "0" },
+        { "text": "RANDOM", "code": "1" },
+        { "text": "SARSA", "code": "2" },
+        { "text": "Q-LEARNING", "code": "3" },
+        { "text": "EXP SARSA", "code": "4" }
       ]
     }
   },
   "logger": {
-    "dictkeys": ["id", "time", "score"],
+    "dictkeys": ["id", "agent", "time", "score"],
     "logfile": "visitorlog.csv"
   },
   "game": {

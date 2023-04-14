@@ -34,13 +34,12 @@ class info_logger:
     def get_id(self):
         return self.id
     
-    def add_value(self,id,time,score):
-        if id == None:
+    def add_value(self,id,key,value):
+        if key not in self.dictkeys or id == None:
             return
         if self.workingdict['id'] != id and self.workingdict['id'] != None:
             self.writeout()
-        self.workingdict['time'] = time
-        self.workingdict['score'] = score
+        self.workingdict[key] = value
     
     def writeout(self):
         if self.workingdict['id'] != None:

@@ -29,15 +29,17 @@ class State:
 class RandomAgent:
     def __init__(self):
         self.actions = [-90,-45,0,45,90]
+        self.Q_table = {}
 
-    def take_action(self):
+    def update(self,oloc,ohead,iloc,ihead,dest):
         return random.choice(self.actions)
     
 class NormalAgent:
     def __init__(self):
         self.actions = [-90,-45,0,45,90]
+        self.Q_table = {}
 
-    def take_action(self):
+    def update(self,oloc,ohead,iloc,ihead,dest):
         return 0
     
 class SarsaAgent:
@@ -72,14 +74,6 @@ class SarsaAgent:
             best_action = 45*(best_action_value_index-2)
             # state_action = np.max(np.random.permutation(np.array(state_action)))
             return best_action
-
-    # def check_state_exist(self,state):
-    #     if state not in self.Q_table.index:
-    #         self.Q_table = pd.concat([self.Q_table, pd.Series([state]+
-    #                 [0]*len(self.actions),index=self.Q_table.columns,name = state,
-    #             )] , axis = 1
-    #         )
-
 
     def learn(self,s,a,r,s_,a_):
         q_predict = self.Q_table[hash(s)][self.actions.index(a)]

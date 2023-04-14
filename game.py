@@ -99,10 +99,18 @@ class Game:
 
         self.app.init(self.cnt_main, self.screen)
 
-    def start(self):
+    def start(self,agent):
         clock = pygame.time.Clock()
-        self.Agent = SarsaAgent(load_q_table='offline_q_table.pkl')
-        with open('offline_q_table.pkl', 'wb') as f:
+        pklname = agent + 'offline_q_table.pkl'
+        choice = {
+            '0': NormalAgent(),
+            '1': RandomAgent(),
+            '2': SarsaAgent(load_q_table= pklname),
+            '3': SarsaAgent(load_q_table= pklname),
+            '4': SarsaAgent(load_q_table= pklname),
+        }
+        self.Agent = choice[agent]
+        with open(pklname, 'wb') as f:
                 pickle.dump(self.Agent.Q_table, f) 
         # self.Agent = NormalAgent()
         #nextDemoEventTime = rand9om.randint(10000,20000)
@@ -184,7 +192,8 @@ class Game:
 
         #Game over, display game over message
         self.__displayPostGameDialog()
-
+        with open(pklname, 'wb') as f:
+                pickle.dump(self.Agent.Q_table, f)
         return (self.gameEndCode,self.ms_elapsed//1000, self.score)
         
     #Request a new selected aircraft
@@ -338,11 +347,9 @@ class Game:
                     if a.lastEdit == 0:
                         a.lastEdit = pygame.time.get_ticks()
                         a.turnHeading(self.Agent.update(a.getLocation(),a.getHeading(),at.getLocation(),at.getHeading(),a.destination))
-                        # a.turnHeading(self.Agent.take_action())
                     elif (pygame.time.get_ticks() - a.lastEdit) >= 1000:
                         a.lastEdit = pygame.time.get_ticks()
                         a.turnHeading(self.Agent.update(a.getLocation(),a.getHeading(),at.getLocation(),at.getHeading(),a.destination))
-                        # a.turnHeading(self.Agent.take_action())
                     
                     if self.demomode == False:
                         #Checking if the sound is already playing. (Happens alot)
@@ -403,9 +410,8 @@ class Game:
         self.obstacles = Obstacle.generateGameObstacles(Game.AERIALPANE_W, Game.AERIALPANE_H, self.destinations)
 
     def __displayPostGameDialog(self):
+        pass
         #Do post-loop actions (game over dialogs)
-        with open('offline_q_table.pkl', 'wb') as f:
-                pickle.dump(self.Agent.Q_table, f)
         # if(self.gameEndCode != conf.get()['codes']['user_end'] and self.gameEndCode != conf.get()['codes']['kill']):
             # l = gui.Label("Game Over!")
             # b = gui.Button("OK")

@@ -18,8 +18,8 @@ def High(fname,limit=10):
     return Highs(fname,limit)['default']
     
 class _Score:
-    def __init__(self,score,name,data=None):
-        self.score,self.name,self.data=score,name,data
+    def __init__(self,agent,time,score):
+        self.name,self.data,self.score = agent,time,score
     
 class _High:
     """A high score table.  These objects are passed to the user, but should not be created directly.
@@ -53,7 +53,7 @@ class _High:
         """
         self.highs.save()
         
-    def submit(self,score,name,data=None):
+    def submit(self,agent,time,score):
         """Submit a high score to this table.
         
         <pre>_High.submit(score,name,data=None)</pre>
@@ -62,13 +62,13 @@ class _High:
         """
         n = 0
         for e in self._list:
-            if score > e.score:
-                self._list.insert(n,_Score(score,name,data))
+            if int(score) > int(e.score):
+                self._list.insert(n,_Score(agent,time,score))
                 self._list = self._list[0:self.limit]
                 return n
             n += 1
         if len(self._list) < self.limit:
-            self._list.append(_Score(score,name,data))
+            self._list.append(_Score(agent,time,score))
             return len(self._list)-1
 
     def check(self,score):
@@ -81,7 +81,7 @@ class _High:
         """
         n = 0
         for e in self._list:
-            if score > e.score:
+            if int(score) > int(e.score):
                 return n
             n += 1
         if len(self._list) < self.limit:
@@ -115,7 +115,7 @@ class Highs:
     </code>
     
     """
-    def __init__(self,fname,limit=1000000):
+    def __init__(self,fname,limit=25):
         self.fname = fname
         self.limit = limit
         self.load()
@@ -148,7 +148,7 @@ class Highs:
         f = open(self.fname,"w")
         for key,high in self._dict.items():
             for e in high:
-                f.write("%s,%d,%s,%s\n"%(key,e.score,e.name,str(e.data)))
+                f.write("%s,%s,%s,%s\n"%(key,str(e.name),str(e.data),str(e.score)))
         f.close()
         
     def __getitem__(self,key):

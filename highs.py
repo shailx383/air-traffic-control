@@ -45,20 +45,18 @@ class HighScore:
             elif(event.type == pygame.KEYUP):
                 if(event.key == pygame.K_ESCAPE):
                     self.highEnd = conf.get()['codes']['user_end']
-    def addSub(self,score):
-        if (score > 0):
-                position = self.myScores.check(score)
-                if(position != None):
-                    position = self.myScores.submit(score,"SARSA",None)
+    def addSub(self,score,agent,time):
+            position = self.myScores.check(score)
+            if(position != None):
+                position = self.myScores.submit(agent,time,score)
 
-    def start(self,score):   
+    def start(self):   
         self.highEnd = 0            
         clock = pygame.time.Clock()
 
-        if (score > 0):
-                position = self.myScores.check(score)
-                if(position != None):
-                    position = self.myScores.submit(score,"SARSA",None)
+        # if (score > 0):
+                # position = self.myScores.check(score)
+                # if(position != None):
                 #     app = gui.Desktop()
                 #     app.connect(gui.QUIT,app.quit,None)
                 #     main = gui.Container(width=500, height=400) #, background=(220, 220, 220) )
@@ -98,17 +96,27 @@ class HighScore:
         
         #data contains the html to be parsed on to the screen. This section sets up the table and the table headers
         data = "<table border=1 width=100% align='center' style='border:1px; border-color: #000088; background: #ccccff; margin: 20px; padding: 20px;'>"
-        data += "<tr><td width=100%><b>Position</b></td><td width=100%><b>Player</b></td><td width=100%><b>Score</b></td></tr>"
+        data += "<tr><td width=100%><b>Position</b></td><td width=100%><b>Agent</b></td><td width=100%><b>Time</b></td><td width=100%><b>Score</b></td></tr>"
         
         count = 0
         #Iterate each item in the high score list and add each as a row to the table
+        choice = {
+            '0': "BEELINE",
+            '1': "RANDOM",
+            '2':  "SARSA",
+            '3': "Q-LEARNING",
+            '4':  "EXP SARSA",
+        }
         for e in self.myScores:
             data += "<tr>"
             data += "<td>"
             data += PositionText(count)
             data += "</td>"
             data += "<td>"
-            data += e.name
+            data += choice[str(e.name)]
+            data += "</td>"
+            data += "<td>"
+            data += str(e.data)
             data += "</td>"
             data += "<td>"
             data += str(e.score)
