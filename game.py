@@ -127,12 +127,6 @@ class Game:
                     randIndex = random.choice(range(0,len(self.aircraft)))
                     randAC = self.aircraft[randIndex]
                     randAC.requestSelected()
-                elif (randAC):
-                    # Ramp the current aircraft's speed up and down
-                    if (randAC.getSpeed() < 110 or randAC.getSpeed() > 990):
-                        ds *= -1 
-                    randAC.setSpeed(randAC.getSpeed() + ds)
-
             
             #Draw background
             pygame.draw.rect(self.screen, (0, 0, 0), self.screen.get_rect())
@@ -163,8 +157,8 @@ class Game:
             
             if self.demomode == False:
                 #if self.score is negative cap it at 0.
-                if self.score <= 0:
-                    self.score = 0
+                # if self.score <= 0:
+                    # self.score = 0
                 #Draw score/time indicators
                 sf_score = self.font.render("Score: " + str(self.score), True, Game.COLOR_SCORETIME)
                 sf_time = self.font.render("Time: " + str( math.floor((self.ms_elapsed) / 1000) ), True, Game.COLOR_SCORETIME)
@@ -173,7 +167,7 @@ class Game:
                 self.screen.blit(sf_score, (Game.FSPANE_LEFT + 30, 10))
                 self.screen.blit(sf_time, (Game.FSPANE_LEFT + 30, 40))
             else:
-                #if (self.ms_elapsed / 1000) % 2 == 0:
+                if (self.ms_elapsed / 1000) % 2 == 0:
                     sf_demo = pygame.font.Font(None, 50).render("DEMO MODE!", True, (255, 100, 100))
                     self.screen.blit(sf_demo, (Game.FSPANE_LEFT + 15, 10))
 
@@ -191,7 +185,7 @@ class Game:
         #Game over, display game over message
         self.__displayPostGameDialog()
 
-        return (self.gameEndCode, self.score)
+        return (self.gameEndCode,self.ms_elapsed//1000, self.score)
         
     #Request a new selected aircraft
     def requestSelected(self, ac):
@@ -312,12 +306,13 @@ class Game:
                         self.gameEndCode = conf.get()['codes']['user_end']
     
     def __callback_User_End(self):
-        self.gameEndCode = conf.get()['codes']['user_end']
+        self.gameEndCode = conf.get()['codes']['time_up']
 
     def __handleAircraftObstacleCollisions(self):
-        for o in self.obstacles:
-            newCollides = o.collideAircraft(self.aircraft)
-            self.score += (newCollides * conf.get()['scoring']['obs_collide'])
+        pass
+        # for o in self.obstacles:
+            # newCollides = o.collideAircraft(self.aircraft)
+            # self.score += (newCollides * conf.get()['scoring']['obs_collide'])
 
     def __handleAircraftCollision(self, ac1, ac2):
         if( Utility.locDistSq(ac1.getLocation(), ac2.getLocation()) < (conf.get()['aircraft']['collision_radius'] ** 2) ):

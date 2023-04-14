@@ -60,18 +60,16 @@ class _High:
         
         <p>return -- the position in the table that the score attained.  None if the score did not attain a position in the table.</p>
         """
-        # n = 0
-        # for e in self._list:
-        #     if score > e.score:
-        #         self._list.insert(n,_Score(score,name,data))
-        #         self._list = self._list[0:self.limit]
-        #         return n
-        #     n += 1
-        # if len(self._list) < self.limit:
-        #     self._list.append(_Score(score,name,data))
-        #     return len(self._list)-1
-        self._list.append(_Score(score,name,data))
-        return len(self._list)-1
+        n = 0
+        for e in self._list:
+            if score > e.score:
+                self._list.insert(n,_Score(score,name,data))
+                self._list = self._list[0:self.limit]
+                return n
+            n += 1
+        if len(self._list) < self.limit:
+            self._list.append(_Score(score,name,data))
+            return len(self._list)-1
 
     def check(self,score):
         """Check if a score will attain a position in the table.
@@ -81,14 +79,13 @@ class _High:
         <p>return -- the position the score will attain, else None</p>
 
         """
-        return True
-        # n = 0
-        # for e in self._list:
-        #     if score > e.score:
-        #         return n
-        #     n += 1
-        # if len(self._list) < self.limit:
-        #     return len(self._list)
+        n = 0
+        for e in self._list:
+            if score > e.score:
+                return n
+            n += 1
+        if len(self._list) < self.limit:
+            return len(self._list)
         
         
     def __iter__(self):

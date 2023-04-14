@@ -26,7 +26,7 @@
     }
   },
   "logger": {
-    "dictkeys": ["id", "score"],
+    "dictkeys": ["id", "time", "score"],
     "logfile": "visitorlog.csv"
   },
   "game": {

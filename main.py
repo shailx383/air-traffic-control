@@ -51,10 +51,8 @@ class Main:
             if (state == STATE_MENU):
                 menuEndCode = None
                 menuEndCode = self.menu.main_loop()
-                self.infologger.writeout()
                 if (menuEndCode == conf.get()['codes']['start']):
                     state = STATE_AGES
-                    self.infologger.add_value(self.id,'id',self.id)
                 elif (menuEndCode == conf.get()['codes']['demo']):
                     state = STATE_DEMO
                 elif (menuEndCode == conf.get()['codes']['high_score']):
@@ -63,31 +61,33 @@ class Main:
                     state = STATE_KILL
             elif (state == STATE_GAME):
                 game = Game(self.screen, False)
-                (gameEndCode, score) = game.start()
-                self.infologger.add_value(self.id,'score',score)
+                (gameEndCode,time, score) = game.start()
                 if (gameEndCode == conf.get()['codes']['time_up']):
                     state = STATE_HIGH
                 elif (gameEndCode == conf.get()['codes']['kill']):
                     state = STATE_KILL
                 elif (gameEndCode == conf.get()['codes']['user_end']):
-                    state = STATE_HIGH
+                    state = STATE_MENU
                 elif (gameEndCode == conf.get()['codes']['ac_collide']):
                     self.high.addSub(score)
-                    state = STATE_GAME
+                    print(self.id,time,score)
+                    self.infologger.add_value(self.id,time,score)
+                    self.infologger.writeout()
                     score=0
                     self.id += 1
+                    state = STATE_GAME
             elif (state == STATE_DEMO):
                game = Game(self.screen, True)
-               (gameEndCode, score) = game.start()
+               (gameEndCode,time, score) = game.start()
                state = STATE_MENU
             elif (state == STATE_HIGH):
                 highEndCode = self.high.start(score)
-                state = STATE_MENU
                 score = 0
+                state = STATE_MENU
             elif (state == STATE_KILL):
                 exit = 1
             elif (state == STATE_AGES):
-                self.infologger.add_value(self.id,'agegroup',self.ages.main_loop())
+                # self.infologger.add_value(self.id,'agegroup',self.ages.main_loop())
                 state = STATE_GAME
             game = None
 
