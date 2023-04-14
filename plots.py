@@ -28,4 +28,24 @@ plot_performance('SARSA')
 plot_performance('Q-LEARNING')
 plot_performance('EXP SARSA')
 plot_performance('DQ-LEARNING')
-    
+
+
+def plot_compared_performance(agent1: str, agent2: str):
+    log_df = pd.read_csv('visitorlog.csv')
+    agent_log_df1 = log_df[log_df['agent'] == AGENT_MAP[agent1]]
+    agent_log_df2 = log_df[log_df['agent'] == AGENT_MAP[agent2]]
+    x1 = agent_log_df1['id']
+    y1 = agent_log_df1['score']
+    y2 = agent_log_df2['score']
+    x2 = agent_log_df2['id']
+    plt.figure()
+    plt.plot(x1[:28], y1[:28], 'r', label = agent1)
+    plt.plot(x1[:28], y2[:28], 'b', label = agent2)
+    plt.legend()
+    plt.xlabel('Episode')
+    plt.ylabel('Score')
+    plt.title(agent1 +' vs ' + agent2)
+    plt.savefig('plots/' + agent1 +'_vs_' + agent2 + '_performance.png')
+
+plot_compared_performance("SARSA", "DQ-LEARNING")
+        
