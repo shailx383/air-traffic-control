@@ -25,7 +25,7 @@ class State:
         return int((((self.ihead - self.ohead)+360)%360) // 10)
     
     def dist(self):
-        return int(np.sqrt((self.iloc[0] - self.oloc[0])**2 + (self.iloc[1] - self.oloc[1])**2))
+        return int(np.sqrt((self.iloc[0] - self.oloc[0])**2 + (self.iloc[1] - self.oloc[1])**2)//5)
 
 class RandomAgent:
     def __init__(self):

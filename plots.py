@@ -7,6 +7,7 @@ AGENT_MAP = {
             'SARSA':  2,
             'Q-LEARNING': 3,
             'EXP SARSA':  4,
+            'DQ-LEARNING': 5,
         }
 
 def plot_performance(agent: str):
@@ -21,5 +22,10 @@ def plot_performance(agent: str):
     plt.title(agent)
     plt.savefig('plots/' + agent + '_performance.png')
 
-plot_performance("SARSA")
+plot_performance('BEELINE')
+plot_performance('RANDOM')
+plot_performance('SARSA')
+plot_performance('Q-LEARNING')
+plot_performance('EXP SARSA')
+plot_performance('DQ-LEARNING')
     
