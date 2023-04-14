@@ -106,7 +106,7 @@ class Game:
             '0': NormalAgent(),
             '1': RandomAgent(),
             '2': SarsaAgent(load_q_table= pklname),
-            '3': SarsaAgent(load_q_table= pklname),
+            '3': QLAgent(load_q_table= pklname),
             '4': SarsaAgent(load_q_table= pklname),
         }
         self.Agent = choice[agent]
