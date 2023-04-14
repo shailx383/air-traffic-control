@@ -102,16 +102,20 @@ class Game:
     def start(self,agent):
         clock = pygame.time.Clock()
         pklname = agent + 'offline_q_table.pkl'
+        pklname2 = agent + 'offline_p_table.pkl'
         choice = {
             '0': NormalAgent(),
             '1': RandomAgent(),
             '2': SarsaAgent(load_q_table= pklname),
             '3': QLAgent(load_q_table= pklname),
-            '4': SarsaAgent(load_q_table= pklname),
+            '4': ESarsaAgent(load_q_table= pklname,load_p_table= pklname2),
         }
         self.Agent = choice[agent]
         with open(pklname, 'wb') as f:
                 pickle.dump(self.Agent.Q_table, f) 
+        if agent == '4' or agent == '5':
+            with open(pklname2, 'wb') as f:
+                pickle.dump(self.Agent.P_table, f) 
         # self.Agent = NormalAgent()
         #nextDemoEventTime = rand9om.randint(10000,20000)
         nextDemoEventTime = 6000 # first demo event time is 6 seconds after start of demo
@@ -194,6 +198,9 @@ class Game:
         self.__displayPostGameDialog()
         with open(pklname, 'wb') as f:
                 pickle.dump(self.Agent.Q_table, f)
+        if agent == '4' or agent == '5':
+            with open(pklname2, 'wb') as f:
+                pickle.dump(self.Agent.P_table, f) 
         return (self.gameEndCode,self.ms_elapsed//1000, self.score)
         
     #Request a new selected aircraft

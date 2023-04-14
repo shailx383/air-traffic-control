@@ -22,3 +22,4 @@ default,3,37,-800
 default,2,19,-1000
 default,2,0,-1000
 default,2,0,-1000
+default,2,0,0
