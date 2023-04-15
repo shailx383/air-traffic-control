@@ -100,7 +100,7 @@ class SarsaAgent:
         a = self.take_action(hash(s))
         s_ = s
         s_= self.next_state(s_,a)
-        r = -(radius**2 - s.dist()**2)/(radius**2 //500) 
+        r = -((radius**2 - s.dist()**2)/(radius**2 //500))**2  + np.sqrt(100 -  np.sqrt((dest[0] - oloc[0])**2 + (dest[1] - oloc[1])**2 ))
         a_ = self.take_action(hash(s_))
         self.learn(s,a,r,s_,a_)
         return a
@@ -302,7 +302,7 @@ class ESarsaAgent:
 
 
 class DQLAgent:
-    def __init__(self, load_q_table = None,load_p_table = None, learning_rate = 0.01, discount_factor = 0.9, epsilon = 0.1):
+    def __init__(self, load_q_table = None,load_p_table = None, learning_rate = 0.1, discount_factor = 0.6, epsilon = 0.05):
         self.actions = [-90,-45,0,45,90]
         # self.actionnames = ["state","hl",'ml','n','mr','hr']
         self.lr = learning_rate

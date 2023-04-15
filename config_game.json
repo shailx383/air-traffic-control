@@ -31,8 +31,8 @@
   },
   "game": {
     "gametime": 180000,
-    "n_aircraft": 100,
-    "n_destinations": 10,
+    "n_aircraft": 30,
+    "n_destinations": 7,
     "n_obstacles": 5,
     "framerate": 60,
     "fullscreen": true,
@@ -58,7 +58,7 @@
     "speed_max": 1000,
     "speed_default": 1000,
     "speed_scalefactor": 2000.0,
-    "collision_radius": 20,
+    "collision_radius": 30,
     "draw_radius": false
   }
 }

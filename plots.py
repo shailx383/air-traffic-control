@@ -47,5 +47,5 @@ def plot_compared_performance(agent1: str, agent2: str, num_episodes: int):
     plt.title(agent1 +' vs ' + agent2)
     plt.savefig('plots/' + agent1 +'_vs_' + agent2 + '_performance.png')
 
-plot_compared_performance("SARSA", "RANDOM", 10)
+plot_compared_performance("SARSA", "RANDOM", 55)
         
