@@ -26,11 +26,12 @@ class State:
         return int((((self.ihead - self.ohead)+360)%360) // 10)
     
     def dist(self):
-        return int(np.sqrt((self.iloc[0] - self.oloc[0])**2 + (self.iloc[1] - self.oloc[1])**2)//5)
+        return int(np.sqrt((self.iloc[0] - self.oloc[0])**2 + (self.iloc[1] - self.oloc[1])**2)//2)
 
 class RandomAgent:
     def __init__(self):
         self.actions = [-90,-45,0,45,90]
+        self.name = "RANDOM"
         self.Q_table = {}
 
     def update(self,oloc,ohead,iloc,ihead,dest):
@@ -38,6 +39,7 @@ class RandomAgent:
     
 class NormalAgent:
     def __init__(self):
+        self.name = "BEELINE"
         self.actions = [-90,-45,0,45,90]
         self.Q_table = {}
 
@@ -50,6 +52,7 @@ class SarsaAgent:
         # self.actionnames = ["state","hl",'ml','n','mr','hr']
         self.lr = learning_rate
         self.gamma = discount_factor
+        self.name = "SARSA"
         self.epsilon = epsilon
         self.Q_table = {}
         if os.path.exists(load_q_table):
@@ -100,7 +103,7 @@ class SarsaAgent:
         a = self.take_action(hash(s))
         s_ = s
         s_= self.next_state(s_,a)
-        r = -((radius**2 - s.dist()**2)/(radius**2 //500))**2  + np.sqrt(100 -  np.sqrt((dest[0] - oloc[0])**2 + (dest[1] - oloc[1])**2 ))
+        r = -((radius**2 - s.dist()**2)/(radius**2 //500))**2  + np.sqrt(abs(100 -  np.sqrt((dest[0] - oloc[0])**2 + (dest[1] - oloc[1])**2 )))
         a_ = self.take_action(hash(s_))
         self.learn(s,a,r,s_,a_)
         return a
@@ -126,6 +129,7 @@ class QLAgent:
         self.actions = [-90,-45,0,45,90]
         # self.actionnames = ["state","hl",'ml','n','mr','hr']
         self.lr = learning_rate
+        self.name = "Q-LEARNING"
         self.gamma = discount_factor
         self.epsilon = epsilon
         self.Q_table = {}
@@ -215,6 +219,7 @@ class QLAgent:
 class ESarsaAgent:
     def __init__(self, load_q_table = None,load_p_table = None, learning_rate = 0.01, discount_factor = 0.9, epsilon = 0.1):
         self.actions = [-90,-45,0,45,90]
+        self.name = "EXP SARSA"
         # self.actionnames = ["state","hl",'ml','n','mr','hr']
         self.lr = learning_rate
         self.gamma = discount_factor
@@ -304,6 +309,7 @@ class ESarsaAgent:
 class DQLAgent:
     def __init__(self, load_q_table = None,load_p_table = None, learning_rate = 0.1, discount_factor = 0.6, epsilon = 0.05):
         self.actions = [-90,-45,0,45,90]
+        self.name = "DQ-LEARNING"
         # self.actionnames = ["state","hl",'ml','n','mr','hr']
         self.lr = learning_rate
         self.gamma = discount_factor
@@ -387,7 +393,7 @@ class DQLAgent:
         a = self.take_action(hash(s))
         s_ = s
         s_= self.next_state(s_,a)
-        r = -(radius**2 - s.dist()**2)/(radius**2 //500) 
+        r = -((radius**2 - s.dist()**2)/(radius**2 //500))**2  + np.sqrt(abs(100 -  np.sqrt((dest[0] - oloc[0])**2 + (dest[1] - oloc[1])**2 )))
         a_ = self.take_action(hash(s_))
         self.learn(s,a,r,s_)
         return self.greedy_action(hash(s))

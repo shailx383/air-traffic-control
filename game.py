@@ -15,6 +15,7 @@ from pgu import gui
 from flightstrippane import *
 from atc import *
 import pickle
+from plots import *
 
 class Game:
 
@@ -334,6 +335,7 @@ class Game:
             if not self.demomode:
                 self.gameEndCode = conf.get()['codes']['ac_collide']
             self.score += conf.get()['scoring']['ac_collide']
+            plot_performance(self.Agent.name, 10, 'visitorlog.csv')
             # Highlight the collided aircraft
             ac1.image = Aircraft.AC_IMAGE_NEAR # later set to Aircraft.AC_IMAGE_COLLIDED
             ac2.image = Aircraft.AC_IMAGE_NEAR

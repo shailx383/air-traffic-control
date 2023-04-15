@@ -32,7 +32,7 @@
   "game": {
     "gametime": 180000,
     "n_aircraft": 30,
-    "n_destinations": 7,
+    "n_destinations": 6,
     "n_obstacles": 5,
     "framerate": 60,
     "fullscreen": true,
