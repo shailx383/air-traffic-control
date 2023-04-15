@@ -193,7 +193,7 @@ class QLAgent:
         r = -(radius**2 - s.dist()**2)/(radius**2 //500) 
         a_ = self.take_action(hash(s_))
         self.learn(s,a,r,s_)
-        return self.greedy_action(s)
+        return self.greedy_action(hash(s))
 
     def nextLoc(self, location, heading):
         speed = conf.get()['aircraft']['speed_default']
@@ -389,7 +389,7 @@ class DQLAgent:
         r = -(radius**2 - s.dist()**2)/(radius**2 //500) 
         a_ = self.take_action(hash(s_))
         self.learn(s,a,r,s_)
-        return self.greedy_action(s)
+        return self.greedy_action(hash(s))
 
     def nextLoc(self, location, heading):
         speed = conf.get()['aircraft']['speed_default']

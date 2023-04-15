@@ -356,6 +356,8 @@ class Game:
                     elif (pygame.time.get_ticks() - a.lastEdit) >= 800:
                         a.lastEdit = pygame.time.get_ticks()
                         a.turnHeading(self.Agent.update(a.getLocation(),a.getHeading(),at.getLocation(),at.getHeading(),a.destination))
+                    else:
+                        self.Agent.update(a.getLocation(),a.getHeading(),at.getLocation(),at.getHeading(),a.destination)
                     
                     if self.demomode == False:
                         #Checking if the sound is already playing. (Happens alot)
