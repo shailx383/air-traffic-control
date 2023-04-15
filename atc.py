@@ -19,7 +19,8 @@ class State:
         return self.rho()*10000 + self.theta()*100 + self.dist() 
 
     def rho(self):
-        return int((( (np.arctan((self.iloc[1] - self.oloc[1])/(self.iloc[0] - self.oloc[0]) )* (180 / np.pi)) +360  )%360)// 10)
+        slope_of_line_joining = np.arctan((self.iloc[1] - self.oloc[1])/(self.iloc[0] - self.oloc[0]) )* (180 / np.pi) 
+        return int(((360 - self.ohead + slope_of_line_joining) % 360) // 10)
     
     def theta(self):
         return int((((self.ihead - self.ohead)+360)%360) // 10)
