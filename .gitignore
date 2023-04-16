@@ -2,6 +2,6 @@ env
 __pycache__
 *.pkl
 score.txt
-visitorlog.csv
+*.csv
 score.txt
 visitorlogs
