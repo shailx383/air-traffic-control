@@ -58,7 +58,7 @@
     "speed_max": 1000,
     "speed_default": 1000,
     "speed_scalefactor": 2000.0,
-    "collision_radius": 30,
+    "collision_radius": 20,
     "draw_radius": false
   }
 }
