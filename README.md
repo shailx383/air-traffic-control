@@ -22,7 +22,7 @@ http://sourceforge.net/projects/tortoisesvn/files/1.7.6/Application/TortoiseSVN-
 6. To get your GoogleCode.com password go to: http://code.google.com/hosting/settings. Login with the details you provided to Mike
 7. Navigate to where you want your Codebase to live.
 8. Right click on empty space > SVNCheckout...
-9. In the �URL of repository:� Enter the project�s URL in this formate �https://python-air-traffic-control.googlecode.com/svn/trunk/�   
+9. In the URL of repository: Enter the project's URL in this format https://python-air-traffic-control.googlecode.com/svn/trunk/
 10. Press OK and Enter your Google username and your GoogleCode.com password
 11. The codebase should download.
 12. Open CMD
