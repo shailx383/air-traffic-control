@@ -30,10 +30,10 @@ http://sourceforge.net/projects/tortoisesvn/files/1.7.6/Application/TortoiseSVN-
 14. type the following command `python main.py`
 15. Program should run. Step 6 is instead of double clicking of the binary so you can see the output.
 
-#### Project by:
+### Project by:
 
-Aashish Chandra K
-Shailesh Chandra Rao    
-Saurabh K Atreya
-Revanth Nalla
-Bharath Vitala
+#### Aashish Chandra K
+#### Shailesh Chandra Rao    
+#### Saurabh K Atreya
+#### Revanth Nalla
+#### Bharath Vitala
