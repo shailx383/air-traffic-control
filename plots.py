@@ -28,7 +28,7 @@ def plot_performance(agent: str, steps: int, csv_path :str):
 
 # plot_performance('BEELINE')
 # plot_performance('RANDOM')
-# plot_performance('SARSA', 35, 'visitorlog_s.csv')
+# plot_performance('SARSA', 750, 'visitorlog_s.csv')
 # plot_performance('Q-LEARNING', 35, 'visitorlog_q.csv')
 # plot_performance('EXP SARSA', 25, 'visitorlog_esarsa.csv')
 # plot_performance('DQ-LEARNING', 5, 'log.csv')
@@ -54,7 +54,7 @@ def plot_compared_performance(agent1: str, agent2: str, steps: int, csv_path1: s
     plt.title('Performance of '+ agent1 +' vs ' + agent2 + ': ' + str(len(x1))+ ' episodes')
     plt.savefig('plots/' + agent1 +'_vs_' + agent2 + '_performance.png')
 
-# plot_compared_performance("EXP SARSA", "SARSA", 30, 'visitorlog_esarsa.csv', 'visitorlog_s.csv')
+# plot_compared_performance("EXP SARSA", "SARSA", 150, 'visitorlog_esarsa_new.csv', 'visitorlog_sarsa_new.csv')
         
 def triple_plot_compared_performance(agent1: str, agent2: str, agent3: str, steps: int, csv_path1: str, csv_path2: str, csv_path3: str):
     log_df1 = pd.read_csv(csv_path1)
@@ -130,7 +130,7 @@ def all_plot(steps):
     y4 = agent_log_df4['score']
     y5 = agent_log_df5['score']
     x1 = list(range(1, min(len(y1), len(y0), len(y2), len(y3), len(y4), len(y5))+1))
-    plt.figure(figsize=(14,14))
+    plt.figure()
     avs0 = [sum(y0[i - steps:i])/len(y0[i-steps:i]) for i in range(steps, len(x1), steps)]
     avs1 = [sum(y1[i - steps:i])/len(y1[i-steps:i]) for i in range(steps, len(x1), steps)]
     avs2 = [sum(y2[i - steps:i])/len(y2[i-steps:i]) for i in range(steps, len(x1), steps)]
@@ -144,7 +144,7 @@ def all_plot(steps):
     plt.plot(avs_x, avs3, 'y', label = 'Q-LEARNING')
     plt.plot(avs_x, avs4, 'c', label = 'EXP SARSA')
     plt.plot(avs_x, avs5, 'm', label = 'DQ-LEARNING')
-    plt.legend(bbox_to_anchor = (12,12))
+    plt.legend()
     plt.xlabel('Episode')
     plt.ylabel('Score')
     plt.title('Performance of all agents: ' + str(len(x1))+ ' episodes')
