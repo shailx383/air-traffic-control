@@ -6,7 +6,7 @@ def main():
     if os.path.exists("3offline_q_table.pkl"):
         with open("3offline_q_table.pkl", 'rb') as f:
             Q_table = pickle.load(f)
-    print(Q_table)
+    print(len(Q_table))
 
 if __name__ == "__main__":
     main()

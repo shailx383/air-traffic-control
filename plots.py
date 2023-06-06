@@ -28,10 +28,17 @@ def plot_performance(agent: str, steps: int, csv_path :str):
 
 # plot_performance('BEELINE')
 # plot_performance('RANDOM')
+<<<<<<< Updated upstream
 # plot_performance('SARSA', 750, 'visitorlog_s.csv')
 # plot_performance('Q-LEARNING', 35, 'visitorlog_q.csv')
 # plot_performance('EXP SARSA', 25, 'visitorlog_esarsa.csv')
 # plot_performance('DQ-LEARNING', 5, 'log.csv')
+=======
+# plot_performance('SARSA')
+plot_performance('Q-LEARNING')
+# plot_performance('EXP SARSA')
+# plot_performance('DQ-LEARNING')
+>>>>>>> Stashed changes
 
 
 def plot_compared_performance(agent1: str, agent2: str, steps: int, csv_path1: str, csv_path2: str):
@@ -54,6 +61,7 @@ def plot_compared_performance(agent1: str, agent2: str, steps: int, csv_path1: s
     plt.title('Performance of '+ agent1 +' vs ' + agent2 + ': ' + str(len(x1))+ ' episodes')
     plt.savefig('plots/' + agent1 +'_vs_' + agent2 + '_performance.png')
 
+<<<<<<< Updated upstream
 # plot_compared_performance("EXP SARSA", "SARSA", 150, 'visitorlog_esarsa_new.csv', 'visitorlog_sarsa_new.csv')
         
 def triple_plot_compared_performance(agent1: str, agent2: str, agent3: str, steps: int, csv_path1: str, csv_path2: str, csv_path3: str):
@@ -151,3 +159,7 @@ def all_plot(steps):
     plt.savefig('plots/performance.png')
     
 all_plot(100)
+=======
+# plot_compared_performance("SARSA", "RANDOM", 10)
+        
+>>>>>>> Stashed changes
