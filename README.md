@@ -8,7 +8,7 @@
   - Q-Learning
   - Expected Sarsa
   - Double Q-Learning
-  
+
 
 ### Project by:
 
